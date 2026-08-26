@@ -1,0 +1,656 @@
+/* =========================================
+   ERP WORK PROGRESS - MAIN STYLES
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7fb;
+  color: #172033;
+  min-height: 100vh;
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.topbar {
+  background: linear-gradient(135deg, #172554, #2563eb);
+  color: white;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.topbar h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.topbar p {
+  color: #dbeafe;
+  font-size: 15px;
+}
+
+#roleSelect {
+  padding: 11px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 30px 40px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+/* =========================================
+   DASHBOARD STATISTICS
+========================================= */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.stat-card h3 {
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.big-number {
+  font-size: 30px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
+.progress {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2563eb, #22c55e);
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+
+/* =========================================
+   COMPARISON
+========================================= */
+
+.comparison {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.comparison-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.comparison-box div {
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.comparison-box span {
+  display: block;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.comparison-box strong {
+  font-size: 28px;
+  color: #2563eb;
+}
+
+/* =========================================
+   SECTION HEADER
+========================================= */
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.primary-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #1d4ed8;
+}
+
+.review-btn {
+  background: #16a34a;
+  color: white;
+}
+
+.review-btn:hover {
+  background: #15803d;
+}
+
+/* =========================================
+   TASK GRID
+========================================= */
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* =========================================
+   TASK CARD
+========================================= */
+
+.task-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.task-header h3 {
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.task-header p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.in-progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.not-started {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* =========================================
+   TASK INFORMATION
+========================================= */
+
+.task-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.task-info p {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.task-info strong {
+  display: block;
+  color: #172033;
+  margin-top: 4px;
+}
+
+/* =========================================
+   PROGRESS LABEL
+========================================= */
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 12px;
+  color: #64748b;
+}
+
+/* =========================================
+   TASK ACTIONS
+========================================= */
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* =========================================
+   PROOF STATUS
+========================================= */
+
+.proof-status {
+  margin-top: 18px;
+  padding: 14px;
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 6px;
+}
+
+.proof-status p {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.no-proof {
+  margin-top: 15px;
+  padding: 12px;
+  background: #fff7ed;
+  color: #c2410c;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+/* =========================================
+   ALERTS
+========================================= */
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert {
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.alert.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.alert.info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.alert.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.no-alert {
+  background: #dcfce7;
+  color: #166534;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  width: 500px;
+  max-width: 90%;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 6px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.modal-content textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.modal-content .primary-btn {
+  margin-top: 20px;
+}
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.close {
+  float: right;
+  font-size: 26px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.close:hover {
+  color: #ef4444;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty {
+  background: white;
+  padding: 40px;
+  text-align: center;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-box {
+    grid-template-columns: 1fr;
+  }
+
+  .task-info {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================
+   REJECTED PROOF
+========================================= */
+
+.rejected-proof {
+
+  margin-top: 15px;
+
+  padding: 15px;
+
+  background: #fef2f2;
+
+  border-left: 4px solid #ef4444;
+
+  border-radius: 8px;
+
+  color: #991b1b;
+
+}
+
+.rejected-proof strong {
+
+  font-size: 15px;
+
+}
+
+.rejected-proof p {
+
+  margin-top: 7px;
+
+  font-size: 13px;
+
+}
+
+
+/* =========================================
+   PROOF HISTORY
+========================================= */
+
+.proof-history {
+
+  margin-top: 18px;
+
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+}
+
+.proof-history h4 {
+
+  margin-bottom: 12px;
+
+  font-size: 16px;
+
+  color: #172033;
+
+}
+
+
+/* Individual history */
+
+.history-item {
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 13px;
+
+  border-radius: 8px;
+
+  margin-top: 10px;
+
+}
+
+.history-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 8px;
+
+}
+
+.history-item p {
+
+  margin-top: 5px;
+
+  font-size: 13px;
+
+  color: #64748b;
+
+}
+
+
+/* History status */
+
+.history-approved {
+
+  color: #15803d;
+
+  background: #dcfce7;
+
+  padding: 5px 9px;
+
+  border-radius: 15px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+}
+
+.history-rejected {
+
+  color: #b91c1c;
+
+  background: #fee2e2;
+
+  padding: 5px 9px;
+
+  border-radius: 15px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+}
+
+/* =========================================
+   ROLE INFORMATION
+========================================= */
+
+.role-info {
+
+  margin-top: 10px;
+
+  display: inline-block;
+
+  padding: 8px 14px;
+
+  background: #dbeafe;
+
+  color: #1e40af;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}

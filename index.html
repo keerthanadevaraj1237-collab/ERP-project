@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP - Work Progress & Proof Verification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div>
+            <h1>ERP Work Progress</h1>
+            <p>Evidence-Based Project Accountability System</p>
+        </div>
+
+        <select id="roleSelect" onchange="changeRole()">
+
+            <option value="Technical Lead">
+                Technical Lead
+            </option>
+
+            <option value="Team Lead">
+                Team Lead
+            </option>
+
+            <option value="Member">
+                Member
+            </option>
+
+        </select>
+
+        <div id="roleInfo" class="role-info">
+            Logged in as: Technical Lead
+        </div>
+
+    </header>
+
+    <main class="container">
+
+        <!-- PROJECT OVERVIEW -->
+        <section class="dashboard">
+
+            <div class="stat-card">
+                <h3>Overall Progress</h3>
+                <div class="big-number" id="overallProgress">0%</div>
+                <div class="progress">
+                    <div id="overallBar" class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <div class="big-number" id="completedCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>In Progress</h3>
+                <div class="big-number" id="progressCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Pending Verification</h3>
+                <div class="big-number" id="pendingCount">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Overdue</h3>
+                <div class="big-number" id="overdueCount">0</div>
+            </div>
+
+        </section>
+
+        <!-- PROGRESS COMPARISON -->
+        <section class="comparison">
+
+            <h2>Claimed vs Verified Progress</h2>
+
+            <div class="comparison-box">
+
+                <div>
+                    <span>Claimed Progress</span>
+                    <strong id="claimedProgress">0%</strong>
+                </div>
+
+                <div>
+                    <span>Verified Progress</span>
+                    <strong id="verifiedProgress">0%</strong>
+                </div>
+
+                <div>
+                    <span>Mismatch</span>
+                    <strong id="mismatchProgress">0%</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ALERTS -->
+        <section>
+
+            <h2>Project Alerts</h2>
+
+            <div id="alerts" class="alerts">
+                <p class="no-alert">No alerts currently.</p>
+            </div>
+
+        </section>
+
+        <!-- TASKS -->
+        <section>
+
+            <div class="section-header">
+                <h2>Tasks</h2>
+
+                <button onclick="openTaskForm()" class="primary-btn">
+                    + Create Task
+                </button>
+            </div>
+
+            <div id="taskContainer" class="task-grid"></div>
+
+        </section>
+
+    </main>
+
+    <!-- TASK MODAL -->
+    <div id="taskModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeTaskForm()">&times;</span>
+
+            <h2>Create New Task</h2>
+
+            <label>Task Name</label>
+            <input id="taskName" type="text" placeholder="Enter task name">
+
+            <label>Assign To</label>
+            <input id="taskMember" type="text" placeholder="Member name">
+
+            <label>Deadline</label>
+            <input id="taskDeadline" type="date">
+
+            <label>Task Weight (%)</label>
+            <input id="taskWeight" type="number" min="1" max="100" value="10">
+
+            <button onclick="createTask()" class="primary-btn">
+                Create Task
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- PROOF MODAL -->
+    <div id="proofModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeProofModal()">&times;</span>
+
+            <h2>Submit Work Proof</h2>
+
+            <p id="proofTaskName"></p>
+
+            <label>Claimed Progress (%)</label>
+
+            <input id="proofProgress" type="number" min="0" max="100" value="100">
+
+            <label>Proof Type</label>
+
+            <select id="proofType">
+
+                <option value="screenshot">
+                    Screenshot
+                </option>
+
+                <option value="github">
+                    GitHub Commit
+                </option>
+
+                <option value="document">
+                    Document
+                </option>
+
+                <option value="test">
+                    Test Result
+                </option>
+
+                <option value="live">
+                    Live Website
+                </option>
+
+            </select>
+
+            <label>Proof Link / Description</label>
+
+            <textarea id="proofDescription" placeholder="Paste GitHub link or describe your evidence..."></textarea>
+
+            <label>Upload Evidence</label>
+
+            <input id="proofFile" type="file">
+
+            <button onclick="submitProof()" class="primary-btn">
+                Submit Proof
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="ai-proof.js"></script>
+    <script src="engine.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
