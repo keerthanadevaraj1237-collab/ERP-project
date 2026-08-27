@@ -5,220 +5,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP - Work Progress & Proof Verification</title>
+    <title>Evidence-Driven ERP & Project Accountability System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- TOP BAR -->
     <header class="topbar">
-        <div>
-            <h1>ERP Work Progress</h1>
-            <p>Evidence-Based Project Accountability System</p>
+        <div class="brand-wrap">
+            <div class="logo-badge">⚡</div>
+            <div class="brand-text">
+                <h1>Evidence-Driven ERP</h1>
+                <p>Dynamic AI-Powered Team Accountability &amp; Proof Verification</p>
+            </div>
         </div>
 
-        <select id="roleSelect" onchange="changeRole()">
+        <div class="topbar-controls">
+            <button class="btn btn-outline btn-sm" onclick="openCreateUserModal()">+ Add New User</button>
 
-            <option value="Technical Lead">
-                Technical Lead
-            </option>
+            <div class="role-switcher-card">
+                <label for="userSelect">Active Profile</label>
+                <select id="userSelect" class="role-select" onchange="handleUserChange()">
+                    <!-- Populated dynamically via app.js -->
+                </select>
+            </div>
 
-            <option value="Team Lead">
-                Team Lead
-            </option>
-
-            <option value="Member">
-                Member
-            </option>
-
-        </select>
-
-        <div id="roleInfo" class="role-info">
-            Logged in as: Technical Lead
+            <div class="user-badge" id="currentUserDisplay">
+                <div class="user-avatar" id="userAvatar">TH</div>
+                <div class="user-name-role">
+                    <span id="userName">Dr. Arjun Mehta</span> &bull; <strong id="userRole">Technical Head</strong>
+                </div>
+            </div>
         </div>
-
     </header>
 
     <main class="container">
 
-        <!-- PROJECT OVERVIEW -->
-        <section class="dashboard">
-
-            <div class="stat-card">
-                <h3>Overall Progress</h3>
-                <div class="big-number" id="overallProgress">0%</div>
-                <div class="progress">
-                    <div id="overallBar" class="progress-fill"></div>
+        <!-- HIERARCHY WORKFLOW ROADMAP -->
+        <div class="workflow-banner">
+            <div class="workflow-steps">
+                <div class="workflow-step" id="wfStep1">
+                    <span>1️⃣ Technical Head (Guide)</span>
+                    <small>Assign Work to Team &amp; Monitor</small>
+                </div>
+                <span class="workflow-arrow">&rarr;</span>
+                <div class="workflow-step" id="wfStep2">
+                    <span>2️⃣ Team Leader</span>
+                    <small>Create Team &amp; AI Divide Work</small>
+                </div>
+                <span class="workflow-arrow">&rarr;</span>
+                <div class="workflow-step" id="wfStep3">
+                    <span>3️⃣ Team Members</span>
+                    <small>Work &amp; Upload Proof / Pictures</small>
+                </div>
+                <span class="workflow-arrow">&rarr;</span>
+                <div class="workflow-step" id="wfStep4">
+                    <span>4️⃣ Team Leader Review</span>
+                    <small>AI Verification &amp; Approve/Reject</small>
+                </div>
+                <span class="workflow-arrow">&rarr;</span>
+                <div class="workflow-step" id="wfStep5">
+                    <span>5️⃣ Guide Truth Overview</span>
+                    <small>Verified Progress</small>
                 </div>
             </div>
 
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-outline btn-sm" onclick="openCreateTeamModal()" id="btnTopAddTeam">+ Create
+                    Team</button>
+                <button class="btn btn-outline btn-sm" onclick="resetDemoData()"
+                    title="Clear and reset to clean bootstrap state">🔄 Reset Data</button>
+            </div>
+        </div>
+
+        <!-- STATS OVERVIEW -->
+        <section class="stats-grid">
             <div class="stat-card">
-                <h3>Completed</h3>
-                <div class="big-number" id="completedCount">0</div>
+                <div class="stat-header">
+                    <span class="stat-title">Overall Verified Progress</span>
+                    <span class="stat-icon">📊</span>
+                </div>
+                <div class="stat-value" id="statOverallProgress">0%</div>
+                <div class="progress-track">
+                    <div class="progress-bar-fill" id="statOverallBar" style="width: 0%"></div>
+                </div>
+                <div class="stat-footer">Based strictly on approved proof &amp; subtasks</div>
             </div>
 
             <div class="stat-card">
-                <h3>In Progress</h3>
-                <div class="big-number" id="progressCount">0</div>
+                <div class="stat-header">
+                    <span class="stat-title">Completed Tasks</span>
+                    <span class="stat-icon">✅</span>
+                </div>
+                <div class="stat-value" id="statCompleted">0</div>
+                <div class="stat-footer">Evidence-verified complete</div>
             </div>
 
             <div class="stat-card">
-                <h3>Pending Verification</h3>
-                <div class="big-number" id="pendingCount">0</div>
+                <div class="stat-header">
+                    <span class="stat-title">Pending Verification</span>
+                    <span class="stat-icon">🔍</span>
+                </div>
+                <div class="stat-value" id="statPending">0</div>
+                <div class="stat-footer">Proofs waiting for Leader review</div>
             </div>
 
             <div class="stat-card">
-                <h3>Overdue</h3>
-                <div class="big-number" id="overdueCount">0</div>
+                <div class="stat-header">
+                    <span class="stat-title">Rejected / Rework</span>
+                    <span class="stat-icon">❌</span>
+                </div>
+                <div class="stat-value" id="statRejected">0</div>
+                <div class="stat-footer">Returned to members with feedback</div>
             </div>
 
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Progress Mismatches</span>
+                    <span class="stat-icon">⚠️</span>
+                </div>
+                <div class="stat-value" id="statMismatches">0</div>
+                <div class="stat-footer">Claimed &gt; Verified by &ge;15%</div>
+            </div>
         </section>
 
-        <!-- PROGRESS COMPARISON -->
-        <section class="comparison">
-
-            <h2>Claimed vs Verified Progress</h2>
-
-            <div class="comparison-box">
-
-                <div>
-                    <span>Claimed Progress</span>
-                    <strong id="claimedProgress">0%</strong>
-                </div>
-
-                <div>
-                    <span>Verified Progress</span>
-                    <strong id="verifiedProgress">0%</strong>
-                </div>
-
-                <div>
-                    <span>Mismatch</span>
-                    <strong id="mismatchProgress">0%</strong>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ALERTS -->
-        <section>
-
-            <h2>Project Alerts</h2>
-
-            <div id="alerts" class="alerts">
-                <p class="no-alert">No alerts currently.</p>
-            </div>
-
-        </section>
-
-        <!-- TASKS -->
-        <section>
-
+        <!-- WORK REALITY ENGINE: CLAIMED VS VERIFIED PROGRESS -->
+        <section class="section-card">
             <div class="section-header">
-                <h2>Tasks</h2>
-
-                <button onclick="openTaskForm()" class="primary-btn">
-                    + Create Task
-                </button>
+                <h2>⚖️ Work Reality Engine &mdash; Progress Truth Monitor</h2>
+                <span class="badge badge-in_progress" id="scopeBadge">Scope: Organization Overview</span>
             </div>
 
-            <div id="taskContainer" class="task-grid"></div>
+            <div class="comparison-grid">
+                <div class="compare-box">
+                    <span>Member Claimed Progress</span>
+                    <strong class="claimed-color" id="compareClaimed">0%</strong>
+                    <small style="color: var(--text-dim)">What members claim they finished</small>
+                </div>
 
+                <div class="compare-box">
+                    <span>System Verified Progress</span>
+                    <strong class="verified-color" id="compareVerified">0%</strong>
+                    <small style="color: var(--text-dim)">Calculated from approved evidence</small>
+                </div>
+
+                <div class="compare-box">
+                    <span>Unverified Discrepancy Gap</span>
+                    <strong class="mismatch-color" id="compareMismatch">0%</strong>
+                    <small style="color: var(--text-dim)">Premature or unproven claims</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVE ALERTS -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2>🚨 Real-time Accountability &amp; Risk Alerts</h2>
+            </div>
+            <div class="alerts-list" id="alertsList">
+                <!-- Populated via app.js -->
+            </div>
+        </section>
+
+        <!-- TEAM LEADER VIEW: MANAGE TEAM & ROSTER -->
+        <section class="section-card" id="teamLeaderRosterSection" style="display: none;">
+            <div class="section-header">
+                <h2>👥 My Team &amp; Member Roles (<span id="teamRosterName">Core Innovation Team</span>)</h2>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-outline btn-sm" onclick="openAddMemberModal()">+ Add Member to My
+                        Team</button>
+                </div>
+            </div>
+            <div class="team-members-grid" id="teamMembersContainer">
+                <!-- Populated via app.js -->
+            </div>
+        </section>
+
+        <!-- TECHNICAL HEAD / GUIDE SECTION: MAJOR WORK PACKAGES -->
+        <section class="section-card" id="techLeadSection">
+            <div class="section-header">
+                <h2>🏢 Major Work Packages (Technical Head &rarr; Teams)</h2>
+                <button class="btn btn-primary" id="btnAssignMajorWork" onclick="openMajorWorkModal()">+ Assign Work to
+                    Team</button>
+            </div>
+
+            <div class="major-work-grid" id="majorWorkContainer">
+                <!-- Populated dynamically -->
+            </div>
+        </section>
+
+        <!-- TASKS SECTION (DYNAMIC PER ROLE) -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 id="taskSectionTitle">📋 Assigned Tasks &amp; Evidence Tracker</h2>
+                <div style="display: flex; gap: 10px; align-items: center;" id="taskActionsArea">
+                    <button class="btn btn-primary" id="btnCreateTaskManual" onclick="openTaskModal()">+ Manually Divide
+                        &amp; Assign Task</button>
+                </div>
+            </div>
+
+            <div class="task-grid" id="taskContainer">
+                <!-- Populated dynamically -->
+            </div>
+        </section>
+
+        <!-- TEAM MEMBER VIEW: READ-ONLY TEAMMATES PROGRESS -->
+        <section class="section-card" id="otherMembersProgressSection" style="display: none;">
+            <div class="section-header">
+                <h2>👀 Team Progress Overview (Read-Only)</h2>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">You can view teammate progress transparently,
+                    but only edit your own assigned work.</span>
+            </div>
+            <div class="task-grid" id="otherTasksContainer">
+                <!-- Populated dynamically -->
+            </div>
+        </section>
+
+        <!-- TEAM & PROJECT GROUP CHAT -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2>💬 Connected Project &amp; Task Discussion</h2>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Live coordination across Guide, Team Leader,
+                    and Members</span>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Chat messages render here -->
+                </div>
+
+                <div class="chat-input-row">
+                    <input type="text" id="chatInput"
+                        placeholder="Type a message, ask about task requirements or give feedback..."
+                        onkeypress="handleChatKeyPress(event)">
+                    <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+                </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- TASK MODAL -->
-    <div id="taskModal" class="modal">
+    <!-- ==================== MODALS ==================== -->
 
-        <div class="modal-content">
-
-            <span class="close" onclick="closeTaskForm()">&times;</span>
-
-            <h2>Create New Task</h2>
-
-            <label>Task Name</label>
-            <input id="taskName" type="text" placeholder="Enter task name">
-
-            <label>Assign To</label>
-            <input id="taskMember" type="text" placeholder="Member name">
-
-            <label>Deadline</label>
-            <input id="taskDeadline" type="date">
-
-            <label>Task Weight (%)</label>
-            <input id="taskWeight" type="number" min="1" max="100" value="10">
-
-            <button onclick="createTask()" class="primary-btn">
-                Create Task
-            </button>
-
+    <!-- 1. ASSIGN MAJOR WORK MODAL (Technical Head) -->
+    <div class="modal-overlay hidden" id="majorWorkModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Assign Major Work to Team</h3>
+                <button class="modal-close" onclick="closeMajorWorkModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Work Package Title</label>
+                    <input type="text" id="mwTitle" class="form-input"
+                        placeholder="e.g. AI-Powered Medical Diagnosis System">
+                </div>
+                <div class="form-group">
+                    <label>Detailed Project Scope &amp; Deliverables</label>
+                    <textarea id="mwDescription" class="form-textarea"
+                        placeholder="Detail the full requirements, architecture, API needs, and testing criteria..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Assign to Team / Team Leader</label>
+                    <select id="mwTeamSelect" class="form-select">
+                        <!-- Populated dynamically with teams -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="mwPriority" class="form-select">
+                        <option value="Critical">Critical</option>
+                        <option value="High" selected>High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Target Completion Deadline</label>
+                    <input type="date" id="mwDeadline" class="form-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeMajorWorkModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="createMajorWork()">Assign to Team</button>
+            </div>
         </div>
-
     </div>
 
-    <!-- PROOF MODAL -->
-    <div id="proofModal" class="modal">
-
-        <div class="modal-content">
-
-            <span class="close" onclick="closeProofModal()">&times;</span>
-
-            <h2>Submit Work Proof</h2>
-
-            <p id="proofTaskName"></p>
-
-            <label>Claimed Progress (%)</label>
-
-            <input id="proofProgress" type="number" min="0" max="100" value="100">
-
-            <label>Proof Type</label>
-
-            <select id="proofType">
-
-                <option value="screenshot">
-                    Screenshot
-                </option>
-
-                <option value="github">
-                    GitHub Commit
-                </option>
-
-                <option value="document">
-                    Document
-                </option>
-
-                <option value="test">
-                    Test Result
-                </option>
-
-                <option value="live">
-                    Live Website
-                </option>
-
-            </select>
-
-            <label>Proof Link / Description</label>
-
-            <textarea id="proofDescription" placeholder="Paste GitHub link or describe your evidence..."></textarea>
-
-            <label>Upload Evidence</label>
-
-            <input id="proofFile" type="file">
-
-            <button onclick="submitProof()" class="primary-btn">
-                Submit Proof
-            </button>
-
+    <!-- 2. AI DECOMPOSE & ASSIGN CONFIRMATION MODAL (Team Leader) -->
+    <div class="modal-overlay hidden" id="aiDecomposeModal">
+        <div class="modal-card modal-lg">
+            <div class="modal-header">
+                <h3>🤖 AI Agent Task Decomposition &amp; Assignment</h3>
+                <button class="modal-close" onclick="closeAiDecomposeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="aiDecomposeModalContent">
+                <!-- Populated dynamically with AI plan -->
+            </div>
+            <div class="modal-footer" id="aiDecomposeModalFooter">
+                <!-- Populated dynamically -->
+            </div>
         </div>
-
     </div>
 
+    <!-- 3. CREATE / DIVIDE TASK MODAL (Team Leader Manual) -->
+    <div class="modal-overlay hidden" id="taskModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Divide Major Work &amp; Assign to Member</h3>
+                <button class="modal-close" onclick="closeTaskModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Parent Major Work</label>
+                    <select id="taskParentMajorWork" class="form-select">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskNameInput" class="form-input"
+                        placeholder="e.g. Design &amp; Implement Payment Webhooks">
+                </div>
+                <div class="form-group">
+                    <label>Task Description &amp; Proof Expectations</label>
+                    <textarea id="taskDescInput" class="form-textarea"
+                        placeholder="Detail what the member must build and what proof/pictures they must upload..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Assign To Team Member</label>
+                    <select id="taskMemberSelect" class="form-select">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Subtasks Checklist (Comma separated)</label>
+                    <input type="text" id="taskSubtasksInput" class="form-input"
+                        placeholder="e.g. Schema definition, API Routes, Unit Tests">
+                    <small style="color: var(--text-dim); font-size: 0.75rem;">Verified progress will strictly match
+                        completed subtasks.</small>
+                </div>
+                <div class="form-group">
+                    <label>Deadline</label>
+                    <input type="date" id="taskDeadlineInput" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriorityInput" class="form-select">
+                        <option value="Critical">Critical</option>
+                        <option value="High" selected>High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeTaskModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="createDividedTask()">Assign Task to Member</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. SUBMIT PROOF & EVIDENCE WITH PICTURE UPLOAD MODAL (Team Member) -->
+    <div class="modal-overlay hidden" id="proofModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Submit Completion Proof &amp; Output Evidence</h3>
+                <button class="modal-close" onclick="closeProofModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="proofModalTaskTitle" style="font-weight: 700; color: #93C5FD;"></p>
+                <p style="font-size: 0.82rem; color: var(--text-muted);">The AI Evidence Verification Agent will inspect
+                    your uploaded pictures, links, and explanation before sending to the Team Leader for final approval.
+                </p>
+
+                <div class="form-group">
+                    <label>Claimed Progress (%)</label>
+                    <input type="number" id="proofProgressInput" class="form-input" min="1" max="100" value="100">
+                </div>
+
+                <div class="form-group">
+                    <label>Proof / Evidence Type</label>
+                    <select id="proofTypeSelect" class="form-select">
+                        <option value="screenshot">Output Picture / Screenshot</option>
+                        <option value="github">GitHub Commit / Pull Request</option>
+                        <option value="live">Live Website / Deployed URL</option>
+                        <option value="test">Test Results &amp; Logs</option>
+                        <option value="document">Documentation / Report</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Output Picture / Evidence File</label>
+                    <input type="file" id="proofFileInput" accept="image/*,.pdf,.zip" class="form-input"
+                        style="padding: 7px 10px;" onchange="handleProofImagePreview(event)">
+                    <div id="imagePreviewContainer" style="display: none; margin-top: 8px;">
+                        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Picture Preview:
+                        </p>
+                        <img id="proofPreviewImg" src="" alt="Proof Preview"
+                            style="max-width: 100%; max-height: 180px; border-radius: 6px; border: 1px solid var(--border);">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Live Link or GitHub URL (Optional)</label>
+                    <input type="text" id="proofLinkInput" class="form-input" placeholder="https://...">
+                </div>
+
+                <div class="form-group">
+                    <label>Explanation of Finished Work &amp; Output</label>
+                    <textarea id="proofDescInput" class="form-textarea"
+                        placeholder="Explain the features built, tests passed, and describe what is shown in the output picture..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeProofModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitEvidence()">Submit to Team Leader</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. REVIEW PROOF MODAL (Team Leader) -->
+    <div class="modal-overlay hidden" id="reviewModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Team Leader Proof Verification &amp; Decision</h3>
+                <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="reviewModalContent">
+                <!-- Populated dynamically via app.js -->
+            </div>
+            <div class="modal-footer" id="reviewModalFooter">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. CREATE USER MODAL -->
+    <div class="modal-overlay hidden" id="createUserModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Add New User Profile</h3>
+                <button class="modal-close" onclick="closeCreateUserModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="newUserName" class="form-input" placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="newUserRole" class="form-select" onchange="handleNewUserRoleChange()">
+                        <option value="Technical Head">Technical Head (Guide)</option>
+                        <option value="Team Leader">Team Leader</option>
+                        <option value="Team Member" selected>Team Member</option>
+                    </select>
+                </div>
+                <div class="form-group" id="newUserSkillGroup">
+                    <label>Skill / Specialty (For AI Task Matching)</label>
+                    <input type="text" id="newUserSkill" class="form-input"
+                        placeholder="e.g. Frontend UI Developer / Backend API / QA Tester">
+                </div>
+                <div class="form-group" id="newUserTeamGroup">
+                    <label>Assign to Team</label>
+                    <select id="newUserTeamSelect" class="form-select">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeCreateUserModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveNewUser()">Save User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. CREATE TEAM MODAL -->
+    <div class="modal-overlay hidden" id="createTeamModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Create New Team</h3>
+                <button class="modal-close" onclick="closeCreateTeamModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Team Name</label>
+                    <input type="text" id="newTeamName" class="form-input"
+                        placeholder="e.g. Mobile &amp; Cloud Innovations">
+                </div>
+                <div class="form-group">
+                    <label>Team Leader</label>
+                    <select id="newTeamLeaderSelect" class="form-select">
+                        <!-- Populated dynamically with Team Leaders -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Team Description / Focus Area</label>
+                    <textarea id="newTeamDescription" class="form-textarea"
+                        placeholder="Describe the team's mission and technical focus..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeCreateTeamModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveNewTeam()">Create Team</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. TASK AUDIT & HISTORY MODAL -->
+    <div class="modal-overlay hidden" id="historyModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Task History &amp; Immutable Audit Trail</h3>
+                <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="historyModalContent">
+                <!-- History content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeHistoryModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
     <script src="data.js"></script>
     <script src="ai-proof.js"></script>
     <script src="engine.js"></script>
     <script src="app.js"></script>
-
 </body>
 
 </html>
